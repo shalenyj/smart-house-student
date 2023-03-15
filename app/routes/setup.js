@@ -4,24 +4,18 @@ const { check, validationResult } = require('express-validator/check');
 
 const Setup = require('../models/setup');
 const User = require('../models/user');
+const Report = require('../models/report');
 
-// const getItems = require('../../utils/getItemsFromSetup');
-// const getAutoSettings = require('../../utils/getAutoSettings');
-// const getWeather = require('../../utils/getWeather');
-
-// const createReport = (id, email, type, geoPosition, token) => axios.post(`${process.env.MAIN_HOST}:${process.env.REPORT_SERVICE_PORT}/add-report`, {
-//   user: email,
-//   reportFromRequest: {
-//     typeOfReport: 'new',
-//     geoPosition,
-//     type,
-//     idOfDevice: id
-//   }
-// },
-// {
-//   headers: {
-//     Authorization: token
-//   }});
+const createReport = async(id, email, geoPosition, type) => {
+    const report = new Report({
+      user: email,
+      type,
+      status: 'new',
+      idOfDevice: id,
+      geoPosition,
+    })
+    return report.save()
+}
 
 router.get('/', async(req, res) => {
   try{
@@ -110,10 +104,11 @@ async (req, res) => {
     if (userSetup) {
       userSetup.elements.push(element);
       userSetup.geoPosition = {...geoPosition};
-      const savedSetup = await userSetup.save();
-      // const { _id, type } = savedSetup.elements[savedSetup.elements.length - 1];
+      await userSetup.save();
 
-      // createReport(_id, email, type, geoPosition, req.get('Authorization'));
+      const { _id  } = userSetup.elements[userSetup.elements.length - 1];
+      await createReport(_id, req.email, userSetup.geoPosition,  'connect');
+
       res.status(200).json({ status: true });
     } else {
 
@@ -124,13 +119,14 @@ async (req, res) => {
         ],
         geoPosition,
       });
-
-      const savedSetup = await setup.save();
-      //        const { _id, type } = savedSetup.elements[savedSetup.elements.length - 1];
-
-      // await createReport(_id, email, type, geoPosition, req.get('Authorization'));
-      res.status(200).json({ status: true });
+      
+      await setup.save();
+      const { _id  } = setup.elements[setup.elements.length - 1];
+      
+      await createReport(_id, req.email, geoPosition,  'connect');
+   
     }
+    res.status(200).json({ status: true });
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: 'Unexpected error, details at logs' });
@@ -151,9 +147,10 @@ router.delete('/:id', async (req, res) => {
       return res.status(400).json({ message: 'Incorrect id of setup'});
     }
 
-    userSetup.elements.splice(userSetup.elements.indexOf(item), 1);
+    userSetup.elements[userSetup.elements.indexOf(item)].isActive = false;
 
     await userSetup.save();
+    await createReport(id, req.email, userSetup.geoPosition,  'disconnect');
 
     res.status(200).json({ status: true });
 

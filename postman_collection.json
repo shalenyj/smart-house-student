@@ -1,0 +1,388 @@
+{
+	"info": {
+		"_postman_id": "39637814-8765-4401-b0d4-84a66cf2e94e",
+		"name": "Smart-house-student",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Sign-up",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"test5@mail.com\",\n    \"password\": \"{{password}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base-url}}/sign-up",
+					"host": [
+						"{{base-url}}"
+					],
+					"path": [
+						"sign-up"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Admin",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"test-admin@mail.com\",\n    \"password\": \"{{password}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base-url}}/add-su",
+					"host": [
+						"{{base-url}}"
+					],
+					"path": [
+						"add-su"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add device",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"element\": {\n        \"type\": \"windows\",\n        \"name\": \"My windows\",\n        \"settings\": {\n            \"count\": 5,\n            \"duration\": 300\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base-url}}/setup/",
+					"host": [
+						"{{base-url}}"
+					],
+					"path": [
+						"setup",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit device",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"element\": {\n        \"name\": \"My not favorite curtains\",\n        \"settings\": {\n            \"count\": 12,\n            \"duration\": 300\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base-url}}/setup/641199c3254890119a4477fa",
+					"host": [
+						"{{base-url}}"
+					],
+					"path": [
+						"setup",
+						"641199c3254890119a4477fa"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get reports",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base-url}}/report/",
+					"host": [
+						"{{base-url}}"
+					],
+					"path": [
+						"report",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update report info",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"status\": \"done\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base-url}}/report/6411aadc89fc4f27eb68a58b",
+					"host": [
+						"{{base-url}}"
+					],
+					"path": [
+						"report",
+						"6411aadc89fc4f27eb68a58b"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get report info",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base-url}}/report/",
+					"host": [
+						"{{base-url}}"
+					],
+					"path": [
+						"report",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get device list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base-url}}/setup/",
+					"host": [
+						"{{base-url}}"
+					],
+					"path": [
+						"setup",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get device info",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base-url}}/setup/641191f255a0543f63ae30b2",
+					"host": [
+						"{{base-url}}"
+					],
+					"path": [
+						"setup",
+						"641191f255a0543f63ae30b2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Remove device",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base-url}}/setup/6411a95a1b04df25f35c12be",
+					"host": [
+						"{{base-url}}"
+					],
+					"path": [
+						"setup",
+						"6411a95a1b04df25f35c12be"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sign-in",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response is ok\",  ()=>{",
+							"    pm.response.to.have.status(200)",
+							"})",
+							"",
+							"const jsonData = JSON.parse(responseBody);",
+							"",
+							"pm.collectionVariables.set(\"token\", jsonData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"{{email}}\",\n    \"password\": \"{{password}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base-url}}/sign-in",
+					"host": [
+						"{{base-url}}"
+					],
+					"path": [
+						"sign-in"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get user info",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base-url}}/user",
+					"host": [
+						"{{base-url}}"
+					],
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update user info Copy",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\": \"Ivan\",\n    \"secondName\": \"Smith\",\n    \"phone\": \"3800000000\",\n    \"geoPosition\": {\n        \"lat\": 49.842957,\n        \"lng\": 24.031111\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base-url}}/update",
+					"host": [
+						"{{base-url}}"
+					],
+					"path": [
+						"update"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "tttt@mail.com",
+							"disabled": true
+						},
+						{
+							"key": "firstName",
+							"value": "\"ivan\"",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base-url",
+			"value": "http://localhost:3002",
+			"type": "default"
+		},
+		{
+			"key": "token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjpmYWxzZSwiZW1haWwiOiJ0ZXN0MkBtYWlsLmNvbSIsImlhdCI6MTY3ODYyMTUyOSwiZXhwIjoxNjc4NjIxODI5fQ.daDYVeQ0tpvx-3W9AyAdFLZzt-I8E0BjXufPcohtBdE",
+			"type": "default"
+		},
+		{
+			"key": "email",
+			"value": "test@mail.com",
+			"type": "default"
+		},
+		{
+			"key": "password",
+			"value": "qwerty",
+			"type": "default"
+		}
+	]
+}
